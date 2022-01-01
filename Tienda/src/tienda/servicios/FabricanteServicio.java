@@ -28,14 +28,23 @@ public final class FabricanteServicio {
 
     public Fabricante buscarFabricantePorCodigo(Integer codigo) throws Exception {
         try {
-            if (codigo == null || codigo < 0) {
+            if (codigo == null || codigo < 1) {
                 throw new Exception("Debe indicar un código");
             }
 
             Fabricante fabricante = fabricanteDAO.buscarFabricantePorCodigo(codigo);
 
             return fabricante;
-
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    public Fabricante ultimoFabricanteAgregado() throws Exception {
+        try {
+            Fabricante fabricante = fabricanteDAO.ultimoFabricanteAgregado();
+            
+            return fabricante;
         } catch (Exception e) {
             throw e;
         }
