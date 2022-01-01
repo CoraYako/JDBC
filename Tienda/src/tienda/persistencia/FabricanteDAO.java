@@ -45,4 +45,27 @@ public final class FabricanteDAO extends DAO {
         }
     }
 
+    public Fabricante ultimoFabricanteAgregado() throws Exception {
+        try {
+            String sql = "SELECT * FROM tienda.fabricante ORDER BY codigo DESC LIMIT 1;";
+
+            consultarDDBB(sql);
+            Fabricante fabricante = null;
+
+            while (rs.next()) {
+                fabricante = new Fabricante();
+                
+                fabricante.setCodigo(rs.getInt(1));
+                fabricante.setNombre(rs.getString(2));
+            }
+            
+            desconectarDDBB();
+            return fabricante;
+        } catch (Exception e) {
+            e.printStackTrace();
+            desconectarDDBB();
+            throw e;
+        }
+    }
+
 }
