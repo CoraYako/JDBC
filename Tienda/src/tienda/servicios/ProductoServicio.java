@@ -38,7 +38,7 @@ public final class ProductoServicio {
     
     public void modificarProducto(Integer codigo) throws Exception {
         try {
-            if (codigo == null || codigo < 0) {
+            if (codigo == null || codigo < 1) {
                 throw new Exception("Debe indicar un código");
             }
             
@@ -85,6 +85,16 @@ public final class ProductoServicio {
             Collection<Producto> productos = productoDAO.listarPortatiles();
             
             return productos;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    public Producto buscarProductoMasBarato() throws Exception {
+        try {
+            Producto producto = productoDAO.buscarProductoMasBarato();
+            
+            return producto;
         } catch (Exception e) {
             throw e;
         }
