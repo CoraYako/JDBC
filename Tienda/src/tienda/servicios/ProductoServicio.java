@@ -13,7 +13,7 @@ public final class ProductoServicio {
         productoDAO = new ProductoDAO();
     }
 
-    public void crearProducto(String nombre, Double precio, Fabricante fabricante) throws Exception {
+    public void crearYGuardarProducto(String nombre, Double precio, Fabricante fabricante) throws Exception {
         try {
             if (nombre == null || nombre.trim().isEmpty()) {
                 throw new Exception("Debe indicar un nombre");
@@ -35,35 +35,46 @@ public final class ProductoServicio {
             throw e;
         }
     }
-    
-    public void modificarProducto(Integer codigo) throws Exception {
+
+    public void modificarProducto(Producto producto, String nombre, Double precio, Fabricante fabricante) throws Exception {
         try {
-            if (codigo == null || codigo < 1) {
-                throw new Exception("Debe indicar un código");
+            if (producto == null) {
+                throw new Exception("Debe indicar un producto");
             }
-            
-            Producto producto = productoDAO.buscarProductoPorCodigo(codigo);
-            
+            if (nombre == null || nombre.trim().isEmpty()) {
+                throw new Exception("Debe indicar un nombre");
+            }
+            if (precio == null || precio.isNaN()) {
+                throw new Exception("Debe indicar un precio");
+            }
+            if (fabricante == null) {
+                throw new Exception("Debe indicar un fabricante");
+            }
+
+            producto.setNombre(nombre);
+            producto.setPrecio(precio);
+            producto.setFabricante(fabricante);
+
             productoDAO.modificarProducto(producto);
         } catch (Exception e) {
             throw e;
         }
     }
-    
+
     public Collection<Producto> listarNombreYPrecioDeProductos() throws Exception {
         try {
             Collection<Producto> productos = productoDAO.listarNombreYPrecioDeProductos();
-            
+
             return productos;
         } catch (Exception e) {
             throw e;
         }
     }
-    
+
     public Collection<Producto> listarNombreDeProductos() throws Exception {
         try {
             Collection<Producto> productos = productoDAO.listarNombreDeProductos();
-            
+
             return productos;
         } catch (Exception e) {
             throw e;
@@ -73,31 +84,41 @@ public final class ProductoServicio {
     public Collection<Producto> listarProductosSegunPrecio() throws Exception {
         try {
             Collection<Producto> productos = productoDAO.listarProductosSegunPrecio();
-            
+
             return productos;
         } catch (Exception e) {
             throw e;
         }
     }
-    
-    public Collection<Producto> listarPortatiles() throws Exception{
+
+    public Collection<Producto> listarPortatiles() throws Exception {
         try {
             Collection<Producto> productos = productoDAO.listarPortatiles();
-            
+
             return productos;
         } catch (Exception e) {
             throw e;
         }
     }
-    
+
     public Producto buscarProductoMasBarato() throws Exception {
         try {
             Producto producto = productoDAO.buscarProductoMasBarato();
-            
+
             return producto;
         } catch (Exception e) {
             throw e;
         }
     }
-    
+
+    public Producto buscarProductoPorCodigo(Integer codigo) throws Exception {
+        try {
+            Producto producto = productoDAO.buscarProductoPorCodigo(codigo);
+
+            return producto;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
 }

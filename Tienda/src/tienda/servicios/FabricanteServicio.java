@@ -40,6 +40,20 @@ public final class FabricanteServicio {
         }
     }
     
+    public Fabricante buscarFabricantePorNombre(String nombre) throws Exception {
+        try {
+            if (nombre == null || nombre.trim().isEmpty()) {
+                throw new Exception("Debe indicar un nombre");
+            }
+
+            Fabricante fabricante = fabricanteDAO.buscarFabricantePorNombre(nombre);
+
+            return fabricante;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
     public Fabricante ultimoFabricanteAgregado() throws Exception {
         try {
             Fabricante fabricante = fabricanteDAO.ultimoFabricanteAgregado();

@@ -12,7 +12,7 @@ public class TiendaMain {
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in).useDelimiter("\n");
-        
+
         FabricanteServicio fabricanteServicio = new FabricanteServicio();
         ProductoServicio productoServicio = new ProductoServicio();
 
@@ -76,13 +76,13 @@ public class TiendaMain {
                         Double precio = input.nextDouble();
                         System.out.print("Nombre del fabricante: ");
                         String nombreFabricante = input.next();
-                        
+
                         fabricanteServicio.crearFabricante(nombreFabricante);
-                        
+
                         Fabricante fabricante = fabricanteServicio.ultimoFabricanteAgregado();
-                        
-                        productoServicio.crearProducto(nombre, precio, fabricante);
-                        
+
+                        productoServicio.crearYGuardarProducto(nombre, precio, fabricante);
+
                         System.out.println("Nuevo producto ingresado a la DDBB");
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -94,9 +94,9 @@ public class TiendaMain {
                     try {
                         System.out.print("Indique un nombre para el fabricante: ");
                         String nombre = input.next();
-                        
+
                         fabricanteServicio.crearFabricante(nombre);
-                        
+
                         System.out.println("Nuevo fabricante ingresado a la DDBB");
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -106,11 +106,22 @@ public class TiendaMain {
 
                 case 8:
                     try {
-                        System.out.print("Por favor, ingrese el código del producto: ");
+                        System.out.print("Por favor, ingrese el código del producto a modificar: ");
                         Integer codigo = input.nextInt();
-                        
-                        productoServicio.modificarProducto(codigo);
-                        
+                        Producto producto = productoServicio.buscarProductoPorCodigo(codigo);
+
+                        System.out.println("A continuación indique los nuevos datos");
+                        System.out.print("Nombre: ");
+                        String nombre = input.next();
+                        System.out.print("Precio: ");
+                        Double precio = input.nextDouble();
+
+                        System.out.print("Nombre del fabricante: ");
+                        String nombreFabricante = input.next();
+                        Fabricante fabricante = fabricanteServicio.buscarFabricantePorNombre(nombreFabricante);
+
+                        productoServicio.modificarProducto(producto, nombre, precio, fabricante);
+
                         System.out.println("El producto indicado ha sido modificado");
                     } catch (Exception e) {
                         e.printStackTrace();
