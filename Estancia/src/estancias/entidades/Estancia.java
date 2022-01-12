@@ -5,16 +5,16 @@ import java.sql.Date;
 public final class Estancia {
 
     private Integer idEstancia;
-    private Cliente idCliente;
-    private Casa idCasa;
+    private Cliente cliente;
+    private Casa casa;
     private String nombreHuesped;
     private Date fechaDesde;
     private Date fechaHasta;
 
-    public Estancia(Integer idEstancia, Cliente idCliente, Casa idCasa, String nombreHuesped, Date fechaDesde, Date fechaHasta) {
+    public Estancia(Integer idEstancia, Cliente cliente, Casa casa, String nombreHuesped, Date fechaDesde, Date fechaHasta) {
         this.idEstancia = idEstancia;
-        this.idCliente = idCliente;
-        this.idCasa = idCasa;
+        this.cliente = cliente;
+        this.casa = casa;
         this.nombreHuesped = nombreHuesped;
         this.fechaDesde = fechaDesde;
         this.fechaHasta = fechaHasta;
@@ -31,20 +31,20 @@ public final class Estancia {
         this.idEstancia = idEstancia;
     }
 
-    public Cliente getIdCliente() {
-        return idCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(Cliente idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Casa getIdCasa() {
-        return idCasa;
+    public Casa getCasa() {
+        return casa;
     }
 
-    public void setIdCasa(Casa idCasa) {
-        this.idCasa = idCasa;
+    public void setIdCasa(Casa casa) {
+        this.casa = casa;
     }
 
     public String getNombreHuesped() {
@@ -73,7 +73,7 @@ public final class Estancia {
 
     @Override
     public String toString() {
-        return "Estancia{" + "idEstancia=" + idEstancia + ", idCliente=" + idCliente + ", idCasa=" + idCasa + ", nombreHuesped=" + nombreHuesped + ", fechaDesde=" + fechaDesde + ", fechaHasta=" + fechaHasta + '}';
+        return "Estancia{" + "idEstancia=" + idEstancia + ", cliente=" + cliente + ", casa=" + casa + ", nombreHuesped=" + nombreHuesped + ", fechaDesde=" + fechaDesde + ", fechaHasta=" + fechaHasta + '}';
     }
 
 }

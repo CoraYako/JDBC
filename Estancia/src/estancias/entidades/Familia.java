@@ -8,16 +8,16 @@ public final class Familia {
     private Integer edadMaxima;
     private Integer numHijos;
     private String email;
-    private Casa idCasaFamilia;
+    private Casa casa;
 
-    public Familia(Integer idFamilia, String nombre, Integer edadMinima, Integer edadMaxima, Integer numHijos, String email, Casa idCasaFamilia) {
+    public Familia(Integer idFamilia, String nombre, Integer edadMinima, Integer edadMaxima, Integer numHijos, String email, Casa casa) {
         this.idFamilia = idFamilia;
         this.nombre = nombre;
         this.edadMinima = edadMinima;
         this.edadMaxima = edadMaxima;
         this.numHijos = numHijos;
         this.email = email;
-        this.idCasaFamilia = idCasaFamilia;
+        this.casa = casa;
     }
 
     public Familia() {
@@ -71,17 +71,17 @@ public final class Familia {
         this.email = email;
     }
 
-    public Casa getIdCasaFamilia() {
-        return idCasaFamilia;
+    public Casa getCasa() {
+        return casa;
     }
 
-    public void setIdCasaFamilia(Casa idCasaFamilia) {
-        this.idCasaFamilia = idCasaFamilia;
+    public void setCasa(Casa casa) {
+        this.casa = casa;
     }
 
     @Override
     public String toString() {
-        return "Familia{" + "idFamilia=" + idFamilia + ", nombre=" + nombre + ", edadMinima=" + edadMinima + ", edadMaxima=" + edadMaxima + ", numHijos=" + numHijos + ", email=" + email + ", idCasaFamilia=" + idCasaFamilia + '}';
+        return "Familia{" + "idFamilia=" + idFamilia + ", nombre=" + nombre + ", edadMinima=" + edadMinima + ", edadMaxima=" + edadMaxima + ", numHijos=" + numHijos + ", email=" + email + ", casa=" + casa + '}';
     }
 
 }

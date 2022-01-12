@@ -12,12 +12,12 @@ public final class Casa {
     private String pais;
     private Date fechaDesde;
     private Date fechaHasta;
-    private Integer tiempoMaximo;
     private Integer tiempoMinimo;
+    private Integer tiempoMaximo;
     private Double precioHabitacion;
     private String tipoVivienda;
 
-    public Casa(Integer idCasa, String calle, Integer numero, String codigoPostal, String ciudad, String pais, Date fechaDesde, Date fechaHasta, Integer tiempoMaximo, Integer tiempoMinimo, Double precioHabitacion, String tipoVivienda) {
+    public Casa(Integer idCasa, String calle, Integer numero, String codigoPostal, String ciudad, String pais, Date fechaDesde, Date fechaHasta, Integer tiempoMinimo, Integer tiempoMaximo, Double precioHabitacion, String tipoVivienda) {
         this.idCasa = idCasa;
         this.calle = calle;
         this.numero = numero;
@@ -26,8 +26,8 @@ public final class Casa {
         this.pais = pais;
         this.fechaDesde = fechaDesde;
         this.fechaHasta = fechaHasta;
-        this.tiempoMaximo = tiempoMaximo;
         this.tiempoMinimo = tiempoMinimo;
+        this.tiempoMaximo = tiempoMaximo;
         this.precioHabitacion = precioHabitacion;
         this.tipoVivienda = tipoVivienda;
     }
@@ -133,7 +133,15 @@ public final class Casa {
 
     @Override
     public String toString() {
-        return "Casa{" + "idCasa=" + idCasa + ", calle=" + calle + ", numero=" + numero + ", codigoPostal=" + codigoPostal + ", ciudad=" + ciudad + ", pais=" + pais + ", fechaDesde=" + fechaDesde + ", fechaHasta=" + fechaHasta + ", tiempoMaximo=" + tiempoMaximo + ", tiempoMinimo=" + tiempoMinimo + ", precioHabitacion=" + precioHabitacion + ", tipoVivienda=" + tipoVivienda + '}';
+        return "Casa {" + "\nidCasa: " + idCasa + ", \ncalle: " + calle + 
+                ", \nnumero: " + numero + ", \ncodigoPostal: " + codigoPostal + 
+                ", \nciudad: " + ciudad + ", \npais: " + pais + 
+                ", \nfechaDesde: " + fechaDesde + 
+                ", \nfechaHasta: " + fechaHasta + 
+                ", \ntiempoMinimo: " + tiempoMinimo + 
+                ", \ntiempoMaximo: " + tiempoMaximo + 
+                ", \nprecioHabitacion: " + precioHabitacion + 
+                ", \ntipoVivienda: " + tipoVivienda + "\n}";
     }
 
 }

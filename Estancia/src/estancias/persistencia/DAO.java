@@ -1,7 +1,9 @@
 package estancias.persistencia;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +13,7 @@ public abstract class DAO {
     protected Connection con;
     protected Statement stmt;
     protected ResultSet rs;
+    protected PreparedStatement ps;
 
     private final String USER = "root";
     private final String PASSWORD = "root";
@@ -49,6 +52,18 @@ public abstract class DAO {
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
         } catch (SQLException | ClassNotFoundException e) {
+            throw e;
+        }
+    }
+
+    public void consultaPreparadaDDBB(String sql, Date fecha, Integer dias) throws ClassNotFoundException, SQLException {
+        try {
+            conectarDDBB();
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, fecha);
+            ps.setInt(2, dias);
+            rs = ps.executeQuery();
+        } catch (ClassNotFoundException | SQLException e) {
             throw e;
         }
     }

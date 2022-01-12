@@ -3,12 +3,12 @@ package estancias.entidades;
 public final class Comentario {
 
     private Integer idComentario;
-    private Casa idCasa;
+    private Casa casa;
     private String comentario;
 
-    public Comentario(Integer idComentario, Casa idCasa, String comentario) {
+    public Comentario(Integer idComentario, Casa casa, String comentario) {
         this.idComentario = idComentario;
-        this.idCasa = idCasa;
+        this.casa = casa;
         this.comentario = comentario;
     }
 
@@ -23,12 +23,12 @@ public final class Comentario {
         this.idComentario = idComentario;
     }
 
-    public Casa getIdCasa() {
-        return idCasa;
+    public Casa getCasa() {
+        return casa;
     }
 
-    public void setIdCasa(Casa idCasa) {
-        this.idCasa = idCasa;
+    public void setCasa(Casa casa) {
+        this.casa = casa;
     }
 
     public String getComentario() {
@@ -41,7 +41,7 @@ public final class Comentario {
 
     @Override
     public String toString() {
-        return "Comentario{" + "idComentario=" + idComentario + ", idCasa=" + idCasa + ", comentario=" + comentario + '}';
+        return "Comentario{" + "idComentario=" + idComentario + ", casa=" + casa + ", comentario=" + comentario + '}';
     }
 
 }
