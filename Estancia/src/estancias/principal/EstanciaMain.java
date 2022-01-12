@@ -1,8 +1,10 @@
 package estancias.principal;
 
 import estancias.entidades.Casa;
+import estancias.entidades.Cliente;
 import estancias.entidades.Familia;
 import estancias.servicios.CasaServicio;
+import estancias.servicios.ClienteServicio;
 import estancias.servicios.FamiliaServicio;
 import java.sql.Date;
 import java.util.Collection;
@@ -11,17 +13,12 @@ public class EstanciaMain {
 
     public static void main(String[] args) {
 
-        CasaServicio casaServicio = new CasaServicio();
+        ClienteServicio clienteServicio = new ClienteServicio();
 
         try {
-            Date fecha = new Date(2020-1900, 06-1, 01);
-            Integer dias = 30;
-            
-            System.out.println(fecha);
-            
-            Collection<Casa> casas = casaServicio.listarCasasIndicandoFechaYCantidadDias(fecha, dias);
+            Collection<Cliente> clientes = clienteServicio.listarClientesQueAlquilaron();
 
-            visualizarLista(casas);
+            visualizarLista(clientes);
         } catch (Exception e) {
             e.printStackTrace();
         }
