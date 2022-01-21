@@ -1,5 +1,6 @@
 package tienda.persistencia;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import tienda.entidades.Fabricante;
@@ -16,10 +17,6 @@ public final class ProductoDAO extends DAO {
 
     public void guardarProductoEnDDBB(Producto producto) throws Exception {
         try {
-            if (producto == null) {
-                throw new Exception("Debe indicar un producto");
-            }
-
             String sql = "INSERT INTO tienda.producto (nombre, precio, codigo_fabricante) VALUES ('"
                     + producto.getNombre() + "', '" + producto.getPrecio()
                     + "', '" + producto.getFabricante().getCodigo() + "');";
@@ -27,8 +24,6 @@ public final class ProductoDAO extends DAO {
             insertarModificarEliminarDDBB(sql);
         } catch (Exception e) {
             throw e;
-        } finally {
-            desconectarDDBB();
         }
     }
 
@@ -47,12 +42,11 @@ public final class ProductoDAO extends DAO {
                 productos.add(producto);
             }
 
-            desconectarDDBB();
             return productos;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw e;
+        } finally {
             desconectarDDBB();
-            throw new Exception("Ha ocurrido un error");
         }
     }
 
@@ -72,12 +66,11 @@ public final class ProductoDAO extends DAO {
                 productos.add(producto);
             }
 
-            desconectarDDBB();
             return productos;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw e;
+        } finally {
             desconectarDDBB();
-            throw new Exception("Ha ocurrido un error");
         }
     }
 
@@ -103,12 +96,11 @@ public final class ProductoDAO extends DAO {
                 productos.add(producto);
             }
 
-            desconectarDDBB();
             return productos;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
+        } finally {
             desconectarDDBB();
-            throw new Exception("Ha ocurrido un error");
         }
     }
 
@@ -134,12 +126,11 @@ public final class ProductoDAO extends DAO {
                 productos.add(producto);
             }
 
-            desconectarDDBB();
             return productos;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
+        } finally {
             desconectarDDBB();
-            throw new Exception("Ha ocurrido un error");
         }
     }
 
@@ -162,12 +153,11 @@ public final class ProductoDAO extends DAO {
                 producto.setFabricante(fabricante);
             }
 
-            desconectarDDBB();
             return producto;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
+        } finally {
             desconectarDDBB();
-            throw new Exception("Ha ocurrido un error");
         }
     }
 
@@ -191,12 +181,11 @@ public final class ProductoDAO extends DAO {
                 producto.setFabricante(fabricante);
             }
 
-            desconectarDDBB();
             return producto;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
+        } finally {
             desconectarDDBB();
-            throw new Exception("Ha ocurrido un error");
         }
     }
 

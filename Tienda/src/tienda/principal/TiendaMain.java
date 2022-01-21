@@ -77,7 +77,7 @@ public class TiendaMain {
                         System.out.print("Nombre del fabricante: ");
                         String nombreFabricante = input.next();
 
-                        fabricanteServicio.crearFabricante(nombreFabricante);
+                        fabricanteServicio.crearYGuardarFabricanteDDBB(nombreFabricante);
 
                         Fabricante fabricante = fabricanteServicio.ultimoFabricanteAgregado();
 
@@ -95,7 +95,7 @@ public class TiendaMain {
                         System.out.print("Indique un nombre para el fabricante: ");
                         String nombre = input.next();
 
-                        fabricanteServicio.crearFabricante(nombre);
+                        fabricanteServicio.crearYGuardarFabricanteDDBB(nombre);
 
                         System.out.println("Nuevo fabricante ingresado a la DDBB");
                     } catch (Exception e) {

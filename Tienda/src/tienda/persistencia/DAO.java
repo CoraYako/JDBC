@@ -38,7 +38,7 @@ public abstract class DAO {
             if (rs != null) {
                 rs.close();
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             throw ex;
         }
     }
