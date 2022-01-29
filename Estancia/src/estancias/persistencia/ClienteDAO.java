@@ -1,27 +1,21 @@
 package estancias.persistencia;
 
 import estancias.entidades.Cliente;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.sql.SQLException;
 
 public final class ClienteDAO extends DAO {
 
-    public Collection<Cliente> listarClientesQueAlquilaron() throws Exception {
-        try {
-            String sql = "SELECT cl.*, ca.* "
-                    + "FROM estancias_exterior.clientes cl "
-                    + "INNER JOIN estancias_exterior.estancias est "
-                    + "ON cl.id_cliente = est.id_cliente "
-                    + "INNER JOIN estancias_exterior.casas ca "
-                    + "ON est.id_casa = ca.id_casa;";
-            consultarDDBB(sql);
+    public Cliente buscarPorId(Integer idCliente) throws Exception {
+        Cliente cliente = null;
 
-            Cliente cliente = null;
-            Collection<Cliente> clientes = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM clientes WHERE id_cliente = " + idCliente + ";";
+
+            consultarDDBB(sql);
 
             while (rs.next()) {
                 cliente = new Cliente();
-
+                
                 cliente.setIdCliente(rs.getInt(1));
                 cliente.setNombre(rs.getString(2));
                 cliente.setCalle(rs.getString(3));
@@ -30,17 +24,15 @@ public final class ClienteDAO extends DAO {
                 cliente.setCiudad(rs.getString(6));
                 cliente.setPais(rs.getString(7));
                 cliente.setEmail(rs.getString(8));
-
-                clientes.add(cliente);
             }
 
+        } catch (ClassNotFoundException | SQLException e) {
+            throw e;
+        } finally {
             desconectarDDBB();
-            return clientes;
-        } catch (Exception e) {
-            desconectarDDBB();
-            e.printStackTrace();
-            throw new Exception("Ha ocurrido un error");
         }
+
+        return cliente;
     }
 
 }

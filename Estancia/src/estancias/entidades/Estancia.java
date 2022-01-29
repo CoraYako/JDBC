@@ -43,7 +43,7 @@ public final class Estancia {
         return casa;
     }
 
-    public void setIdCasa(Casa casa) {
+    public void setCasa(Casa casa) {
         this.casa = casa;
     }
 
@@ -73,7 +73,7 @@ public final class Estancia {
 
     @Override
     public String toString() {
-        return "Estancia{" + "idEstancia=" + idEstancia + ", cliente=" + cliente + ", casa=" + casa + ", nombreHuesped=" + nombreHuesped + ", fechaDesde=" + fechaDesde + ", fechaHasta=" + fechaHasta + '}';
+        return "Estancia {" + "idEstancia: " + idEstancia + ", \ncliente: " + cliente + ", \ncasa: " + casa + ", nombreHuesped: " + nombreHuesped + ", fechaDesde: " + fechaDesde + ", fechaHasta: " + fechaHasta + '}';
     }
 
 }

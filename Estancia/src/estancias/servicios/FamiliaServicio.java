@@ -5,21 +5,27 @@ import estancias.persistencia.FamiliaDAO;
 import java.util.Collection;
 
 public class FamiliaServicio {
-    
+
     private final FamiliaDAO familiaDAO;
-    
+
     public FamiliaServicio() {
         familiaDAO = new FamiliaDAO();
     }
 
-    public Collection<Familia> listarFamiliasConTresHijos() throws Exception {
-        try {
-            Collection<Familia> familias = familiaDAO.listarFamiliasConTresHijos();
-            
-            return familias;
-        } catch (Exception e) {
-            throw e;
+    public Familia buscarPorId(Integer idFamilia) throws Exception {
+        if (idFamilia == null || idFamilia < 1) {
+            throw new Exception("Debe indicar un idFamilia válido");
         }
+
+        return familiaDAO.buscarPorId(idFamilia);
+    }
+
+    public Collection<Familia> listarFamiliasConTresHijos() throws Exception {
+        return familiaDAO.listarFamiliasConTresHijos();
     }
     
+    public Collection<Familia> listarConCorreoHotmail() throws Exception {
+        return familiaDAO.listarConCorreoHotmail();
+    }
+
 }

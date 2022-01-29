@@ -15,14 +15,13 @@ public final class FamiliaDAO extends DAO {
         casaServicio = new CasaServicio();
     }
 
-    public Collection<Familia> listarFamiliasConTresHijos() throws SQLException, Exception {
+    public Familia buscarPorId(Integer idFamilia) throws Exception {
+        Familia familia = null;
+
         try {
-            String sql = "SELECT * FROM familias WHERE num_hijos = 3 AND edad_maxima < 10;";
+            String sql = "SELECT * FROM familias WHERE id_familia = " + idFamilia + ";";
 
             consultarDDBB(sql);
-
-            Familia familia = null;
-            Collection<Familia> familias = new ArrayList<>();
 
             while (rs.next()) {
                 familia = new Familia();
@@ -35,56 +34,88 @@ public final class FamiliaDAO extends DAO {
                 familia.setEmail(rs.getString(6));
 
                 Integer idCasa = rs.getInt(7);
-                Casa casa = casaServicio.buscarCasaPorId(idCasa);
+                Casa casa = casaServicio.buscarPorId(idCasa);
 
                 familia.setCasa(casa);
-
-                familias.add(familia);
             }
 
-            desconectarDDBB();
-            return familias;
         } catch (Exception e) {
+            throw e;
+        } finally {
             desconectarDDBB();
-            e.printStackTrace();
-            throw new Exception("Ha ocurrido un error");
         }
+
+        return familia;
     }
-    
-    public Collection<Familia> listarFamiliasConHotmail() throws SQLException, Exception {
+
+    public Collection<Familia> listarFamiliasConTresHijos() throws SQLException, Exception {
+        Collection<Familia> familias = new ArrayList<>();
+
         try {
-            String sql = "SELECT * FROM familias WHERE email LIKE '%hotmail%';";
-            
+            String sql = "SELECT * FROM familias WHERE num_hijos = 3 AND edad_maxima < 10;";
+
             consultarDDBB(sql);
-            
-            Collection<Familia> familias = new ArrayList<>();
-            Familia familia = null;
-            
-            while (rs.next()) {                
-                familia = new Familia();
-                
+
+            while (rs.next()) {
+                Familia familia = new Familia();
+
                 familia.setIdFamilia(rs.getInt(1));
                 familia.setNombre(rs.getString(2));
                 familia.setEdadMinima(rs.getInt(3));
                 familia.setEdadMaxima(rs.getInt(4));
                 familia.setNumHijos(rs.getInt(5));
                 familia.setEmail(rs.getString(6));
-                
+
                 Integer idCasa = rs.getInt(7);
-                Casa casa = casaServicio.buscarCasaPorId(idCasa);
-                
+                Casa casa = casaServicio.buscarPorId(idCasa);
+
                 familia.setCasa(casa);
-                
+
                 familias.add(familia);
             }
-            
-            desconectarDDBB();
-            return familias;
+
         } catch (Exception e) {
+            throw e;
+        } finally {
             desconectarDDBB();
-            e.printStackTrace();
-            throw new Exception("Ha ocurrido un error");
         }
+
+        return familias;
+    }
+
+    public Collection<Familia> listarConCorreoHotmail() throws SQLException, Exception {
+        Collection<Familia> familias = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM familias WHERE email LIKE '%hotmail%';";
+
+            consultarDDBB(sql);
+
+            while (rs.next()) {
+                Familia familia = new Familia();
+
+                familia.setIdFamilia(rs.getInt(1));
+                familia.setNombre(rs.getString(2));
+                familia.setEdadMinima(rs.getInt(3));
+                familia.setEdadMaxima(rs.getInt(4));
+                familia.setNumHijos(rs.getInt(5));
+                familia.setEmail(rs.getString(6));
+
+                Integer idCasa = rs.getInt(7);
+                Casa casa = casaServicio.buscarPorId(idCasa);
+
+                familia.setCasa(casa);
+
+                familias.add(familia);
+            }
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            desconectarDDBB();
+        }
+
+        return familias;
     }
 
 }

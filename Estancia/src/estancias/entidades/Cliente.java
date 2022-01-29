@@ -91,7 +91,7 @@ public final class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "idCliente=" + idCliente + ", nombre=" + nombre + ", calle=" + calle + ", numero=" + numero + ", codigoPostal=" + codigoPostal + ", ciudad=" + ciudad + ", pais=" + pais + ", email=" + email + '}';
+        return "Cliente{" + "idCliente: " + idCliente + ", \nnombre: " + nombre + ", \ncalle: " + calle + ", \nnumero: " + numero + ", \ncodigoPostal: " + codigoPostal + ", \nciudad: " + ciudad + ", \npais: " + pais + ", \nemail: " + email + '}';
     }
     
 }
