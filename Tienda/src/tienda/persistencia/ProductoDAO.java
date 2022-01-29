@@ -15,11 +15,11 @@ public final class ProductoDAO extends DAO {
         fabricanteServicio = new FabricanteServicio();
     }
 
-    public void guardarProductoEnDDBB(Producto producto) throws Exception {
+    public void guardarEnDDBB(Producto p) throws Exception {
         try {
             String sql = "INSERT INTO tienda.producto (nombre, precio, codigo_fabricante) VALUES ('"
-                    + producto.getNombre() + "', '" + producto.getPrecio()
-                    + "', '" + producto.getFabricante().getCodigo() + "');";
+                    + p.getNombre() + "', '" + p.getPrecio()
+                    + "', '" + p.getFabricante().getCodigo() + "');";
 
             insertarModificarEliminarDDBB(sql);
         } catch (Exception e) {
@@ -27,184 +27,218 @@ public final class ProductoDAO extends DAO {
         }
     }
 
-    public Collection<Producto> listarNombreDeProductos() throws Exception {
+    public Collection<Producto> listarNombre() throws Exception {
+        Collection<Producto> productos = new ArrayList<>();
+
         try {
             String sql = "SELECT nombre FROM tienda.producto;";
 
             consultarDDBB(sql);
 
-            Producto producto = null;
-            Collection<Producto> productos = new ArrayList<>();
             while (rs.next()) {
-                producto = new Producto();
-                producto.setNombre(rs.getString(1));
+                Producto p = new Producto();
+                p.setNombre(rs.getString(1));
 
-                productos.add(producto);
+                productos.add(p);
             }
 
-            return productos;
         } catch (ClassNotFoundException | SQLException e) {
             throw e;
         } finally {
             desconectarDDBB();
         }
+
+        return productos;
     }
 
-    public Collection<Producto> listarNombreYPrecioDeProductos() throws Exception {
+    public Collection<Producto> listarNombreYPrecio() throws Exception {
+        Collection<Producto> productos = new ArrayList<>();
+
         try {
             String sql = "SELECT nombre, precio FROM tienda.producto;";
 
             consultarDDBB(sql);
 
-            Producto producto = null;
-            Collection<Producto> productos = new ArrayList<>();
             while (rs.next()) {
-                producto = new Producto();
-                producto.setNombre(rs.getString(1));
-                producto.setPrecio(rs.getDouble(2));
+                Producto p = new Producto();
+                p.setNombre(rs.getString(1));
+                p.setPrecio(rs.getDouble(2));
 
-                productos.add(producto);
+                productos.add(p);
             }
 
-            return productos;
         } catch (ClassNotFoundException | SQLException e) {
             throw e;
         } finally {
             desconectarDDBB();
         }
+
+        return productos;
     }
 
-    public Collection<Producto> listarProductosSegunPrecio() throws Exception {
+    public Collection<Producto> listarSegunPrecio() throws Exception {
+        Collection<Producto> productos = new ArrayList<>();
+
         try {
             String sql = "SELECT * FROM tienda.producto WHERE precio BETWEEN 120 AND 202;";
 
             consultarDDBB(sql);
 
-            Producto producto = null;
-            Collection<Producto> productos = new ArrayList<>();
             while (rs.next()) {
-                producto = new Producto();
-                producto.setCodigo(rs.getInt(1));
-                producto.setNombre(rs.getString(2));
-                producto.setPrecio(rs.getDouble(3));
+                Producto p = new Producto();
+                p.setCodigo(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setPrecio(rs.getDouble(3));
 
                 Integer codigo_fabricante = rs.getInt(4);
-                Fabricante fabricante = fabricanteServicio.buscarFabricantePorCodigo(codigo_fabricante);
+                Fabricante f = fabricanteServicio.buscarPorCodigo(codigo_fabricante);
 
-                producto.setFabricante(fabricante);
+                p.setFabricante(f);
 
-                productos.add(producto);
+                productos.add(p);
             }
 
-            return productos;
         } catch (Exception e) {
             throw e;
         } finally {
             desconectarDDBB();
         }
+
+        return productos;
     }
 
     public Collection<Producto> listarPortatiles() throws Exception {
+        Collection<Producto> productos = new ArrayList<>();
+
         try {
             String sql = "SELECT * FROM tienda.producto WHERE nombre LIKE '%Portatil%';";
 
             consultarDDBB(sql);
 
-            Producto producto = null;
-            Collection<Producto> productos = new ArrayList<>();
             while (rs.next()) {
-                producto = new Producto();
-                producto.setCodigo(rs.getInt("codigo"));
-                producto.setNombre(rs.getString("nombre"));
-                producto.setPrecio(rs.getDouble("precio"));
+                Producto p = new Producto();
+                p.setCodigo(rs.getInt("codigo"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrecio(rs.getDouble("precio"));
 
                 Integer codigo_fabricante = rs.getInt("codigo_fabricante");
-                Fabricante fabricante = fabricanteServicio.buscarFabricantePorCodigo(codigo_fabricante);
+                Fabricante f = fabricanteServicio.buscarPorCodigo(codigo_fabricante);
 
-                producto.setFabricante(fabricante);
+                p.setFabricante(f);
 
-                productos.add(producto);
+                productos.add(p);
             }
 
-            return productos;
         } catch (Exception e) {
             throw e;
         } finally {
             desconectarDDBB();
         }
+
+        return productos;
     }
 
-    public Producto buscarProductoMasBarato() throws Exception {
+    public Producto buscarMasBarato() throws Exception {
+        Producto p = null;
+
         try {
             String sql = "SELECT * FROM tienda.producto WHERE precio = (SELECT MIN(precio) FROM tienda.producto);";
 
             consultarDDBB(sql);
 
-            Producto producto = null;
             while (rs.next()) {
-                producto = new Producto();
-                producto.setCodigo(rs.getInt("codigo"));
-                producto.setNombre(rs.getString("nombre"));
-                producto.setPrecio(rs.getDouble("precio"));
+                p = new Producto();
+                p.setCodigo(rs.getInt("codigo"));
+                p.setNombre(rs.getString("nombre"));
+                p.setPrecio(rs.getDouble("precio"));
 
                 Integer codigo_fabricante = rs.getInt("codigo_fabricante");
-                Fabricante fabricante = fabricanteServicio.buscarFabricantePorCodigo(codigo_fabricante);
+                Fabricante f = fabricanteServicio.buscarPorCodigo(codigo_fabricante);
 
-                producto.setFabricante(fabricante);
+                p.setFabricante(f);
             }
 
-            return producto;
         } catch (Exception e) {
             throw e;
         } finally {
             desconectarDDBB();
         }
+
+        return p;
     }
 
-    public Producto buscarProductoPorCodigo(Integer codigo) throws Exception {
+    public Producto buscarPorCodigo(Integer codigo) throws Exception {
+        Producto p = null;
+
         try {
             String sql = "SELECT * FROM tienda.producto WHERE codigo = " + codigo + ";";
 
             consultarDDBB(sql);
 
-            Producto producto = null;
             while (rs.next()) {
-                producto = new Producto();
+                p = new Producto();
 
-                producto.setCodigo(rs.getInt(1));
-                producto.setNombre(rs.getString(2));
-                producto.setPrecio(rs.getDouble(3));
+                p.setCodigo(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setPrecio(rs.getDouble(3));
 
                 Integer codigo_fabricante = rs.getInt(4);
-                Fabricante fabricante = fabricanteServicio.buscarFabricantePorCodigo(codigo_fabricante);
+                Fabricante f = fabricanteServicio.buscarPorCodigo(codigo_fabricante);
 
-                producto.setFabricante(fabricante);
+                p.setFabricante(f);
             }
 
-            return producto;
         } catch (Exception e) {
             throw e;
         } finally {
             desconectarDDBB();
         }
+
+        return p;
     }
 
-    public void modificarProducto(Producto producto) throws Exception {
+    public void modificar(Producto p) throws Exception {
         try {
-            if (producto == null) {
-                throw new Exception("Debe indicar un producto");
-            }
-
-            String sql = "UPDATE tienda.producto SET nombre = '" + producto.getNombre()
-                    + "', precio = " + producto.getPrecio()
-                    + ", codigo_fabricante = " + producto.getFabricante().getCodigo()
-                    + " WHERE codigo = " + producto.getCodigo() + ";";
+            String sql = "UPDATE tienda.producto SET nombre = '" + p.getNombre()
+                    + "', precio = " + p.getPrecio()
+                    + ", codigo_fabricante = " + p.getFabricante().getCodigo()
+                    + " WHERE codigo = " + p.getCodigo() + ";";
 
             insertarModificarEliminarDDBB(sql);
 
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public Collection<Producto> listarTodos() throws Exception {
+        Collection<Producto> productos = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM producto;";
+
+            consultarDDBB(sql);
+
+            while (rs.next()) {
+                Producto p = new Producto();
+                p.setCodigo(rs.getInt(1));
+                p.setNombre(rs.getString(2));
+                p.setPrecio(rs.getDouble(3));
+
+                Integer codigo_fabricante = rs.getInt(4);
+                Fabricante f = fabricanteServicio.buscarPorCodigo(codigo_fabricante);
+
+                p.setFabricante(f);
+
+                productos.add(p);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw e;
+        } finally {
+            desconectarDDBB();
+        }
+
+        return productos;
     }
 
 }

@@ -1,5 +1,6 @@
 package tienda.servicios;
 
+import java.util.Collection;
 import tienda.entidades.Fabricante;
 import tienda.persistencia.FabricanteDAO;
 
@@ -11,41 +12,39 @@ public final class FabricanteServicio {
         fabricanteDAO = new FabricanteDAO();
     }
 
-    public void crearYGuardarFabricanteDDBB(String nombre) throws Exception {
+    public void guardarEnDDBB(String nombre) throws Exception {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new Exception("Debe indicar un nombre");
         }
 
-        Fabricante fabricante = new Fabricante();
-        fabricante.setNombre(nombre);
+        Fabricante f = new Fabricante();
+        f.setNombre(nombre);
 
-        fabricanteDAO.guardarFabricanteDDBB(fabricante);
+        fabricanteDAO.guardarEnDDBB(f);
     }
 
-    public Fabricante buscarFabricantePorCodigo(Integer codigo) throws Exception {
+    public Fabricante buscarPorCodigo(Integer codigo) throws Exception {
         if (codigo == null || codigo < 1) {
             throw new Exception("Debe indicar un código");
         }
 
-        Fabricante fabricante = fabricanteDAO.buscarFabricantePorCodigo(codigo);
-
-        return fabricante;
+        return fabricanteDAO.buscarPorCodigo(codigo);
     }
 
-    public Fabricante buscarFabricantePorNombre(String nombre) throws Exception {
+    public Fabricante buscarPorNombre(String nombre) throws Exception {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new Exception("Debe indicar un nombre");
         }
 
-        Fabricante fabricante = fabricanteDAO.buscarFabricantePorNombre(nombre);
-
-        return fabricante;
+        return fabricanteDAO.buscarPorNombre(nombre);
     }
 
     public Fabricante ultimoFabricanteAgregado() throws Exception {
-        Fabricante fabricante = fabricanteDAO.ultimoFabricanteAgregado();
-
-        return fabricante;
+        return fabricanteDAO.ultimoAgregado();
+    }
+    
+    public Collection<Fabricante> listarTodos() throws Exception {
+        return fabricanteDAO.listarTodos();
     }
 
 }

@@ -16,123 +16,100 @@ public class TiendaMain {
         FabricanteServicio fabricanteServicio = new FabricanteServicio();
         ProductoServicio productoServicio = new ProductoServicio();
 
-        Integer opcion;
+        Integer opcion, codigo;
+        String nombre, nombreFabricante, eleccion;
+        Double precio;
+        Fabricante f = null;
+        Producto p = null;
 
-        do {
-            menu();
-            opcion = input.nextInt();
-            switch (opcion) {
-                case 1:
-                    try {
-                        visualizarColeccion(productoServicio.listarNombreDeProductos());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
-
-                case 2:
-                    try {
-                        visualizarColeccion(productoServicio.listarNombreYPrecioDeProductos());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
-
-                case 3:
-                    try {
-                        visualizarColeccion(productoServicio.listarProductosSegunPrecio());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
-
-                case 4:
-                    try {
+        try {
+            do {
+                menu();
+                opcion = input.nextInt();
+                switch (opcion) {
+                    case 1:
+                        visualizarColeccion(productoServicio.listarNombre());
+                        break;
+                    case 2:
+                        visualizarColeccion(productoServicio.listarNombreYPrecio());
+                        break;
+                    case 3:
+                        visualizarColeccion(productoServicio.listarSegunPrecio());
+                        break;
+                    case 4:
                         visualizarColeccion(productoServicio.listarPortatiles());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
-
-                case 5:
-                    try {
-                        Producto producto = productoServicio.buscarProductoMasBarato();
-                        System.out.println(producto.toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
-
-                case 6:
-                    try {
+                        break;
+                    case 5:
+                        System.out.println(productoServicio.buscarMasBarato().toString());
+                        break;
+                    case 6:
                         System.out.print("Indique nombre del producto: ");
-                        String nombre = input.next();
+                        nombre = input.next();
                         System.out.print("Precio: ");
-                        Double precio = input.nextDouble();
-                        System.out.print("Nombre del fabricante: ");
-                        String nombreFabricante = input.next();
+                        precio = input.nextDouble();
 
-                        fabricanteServicio.crearYGuardarFabricanteDDBB(nombreFabricante);
+                        System.out.println("¿El nuevo producto es de un fabricante existente? (s/n)");
+                        eleccion = input.next();
 
-                        Fabricante fabricante = fabricanteServicio.ultimoFabricanteAgregado();
+                        if (eleccion.equalsIgnoreCase("s")) {
+                            visualizarColeccion(fabricanteServicio.listarTodos());
 
-                        productoServicio.crearYGuardarProducto(nombre, precio, fabricante);
+                            System.out.print("Indique el código del fabricante: ");
+                            codigo = input.nextInt();
+
+                            f = fabricanteServicio.buscarPorCodigo(codigo);
+                        } else {
+                            System.out.print("Nombre del fabricante: ");
+                            nombreFabricante = input.next();
+
+                            fabricanteServicio.guardarEnDDBB(nombreFabricante);
+
+                            f = fabricanteServicio.ultimoFabricanteAgregado();
+                        }
+
+                        productoServicio.guardarEnDDBB(nombre, precio, f);
 
                         System.out.println("Nuevo producto ingresado a la DDBB");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
 
-                case 7:
-                    try {
+                        break;
+                    case 7:
                         System.out.print("Indique un nombre para el fabricante: ");
-                        String nombre = input.next();
+                        nombre = input.next();
 
-                        fabricanteServicio.crearYGuardarFabricanteDDBB(nombre);
+                        fabricanteServicio.guardarEnDDBB(nombre);
 
                         System.out.println("Nuevo fabricante ingresado a la DDBB");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
 
-                case 8:
-                    try {
+                        break;
+                    case 8:
+                        visualizarColeccion(productoServicio.listarTodos());
                         System.out.print("Por favor, ingrese el código del producto a modificar: ");
-                        Integer codigo = input.nextInt();
-                        Producto producto = productoServicio.buscarProductoPorCodigo(codigo);
+                        codigo = input.nextInt();
+                        p = productoServicio.buscarPorCodigo(codigo);
 
                         System.out.println("A continuación indique los nuevos datos");
                         System.out.print("Nombre: ");
-                        String nombre = input.next();
+                        nombre = input.next();
                         System.out.print("Precio: ");
-                        Double precio = input.nextDouble();
+                        precio = input.nextDouble();
 
-                        System.out.print("Nombre del fabricante: ");
-                        String nombreFabricante = input.next();
-                        Fabricante fabricante = fabricanteServicio.buscarFabricantePorNombre(nombreFabricante);
+                        System.out.print("Código del fabricante: ");
+                        codigo = input.nextInt();
+                        f = fabricanteServicio.buscarPorCodigo(codigo);
 
-                        productoServicio.modificarProducto(producto, nombre, precio, fabricante);
+                        productoServicio.modificar(p, nombre, precio, f);
 
                         System.out.println("El producto indicado ha sido modificado");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("Se ha producido el siguiente error: " + e.getMessage());
-                    }
-                    break;
 
-                default:
-                    System.out.println("Asistente finalizado");
-            }
-        } while (!opcion.equals(9));
+                        break;
+                    default:
+                        System.out.println("Asistente finalizado");
+                }
+            } while (!opcion.equals(9));
+        } catch (Exception e) {
+            System.out.println("Se produjo el siguiente error: " + e.getMessage());
+            e.printStackTrace();
+        }
 
     }
 
@@ -143,14 +120,19 @@ public class TiendaMain {
         System.out.println("3. Listar los productos que su precio esté entre 120 y 202.");
         System.out.println("4. Buscar y listar todos los Portátiles de la tabla producto.");
         System.out.println("5. Listar nombre y precio del producto más barato.");
-        System.out.println("6. Ingresar un producto a la base de datos.");
+        System.out.println("6. Ingresar un nuevo producto a la base de datos.");
         System.out.println("7. Ingresar un fabricante a la base de datos");
         System.out.println("8. Editar los datos de un producto");
         System.out.println("9. Salir");
         System.out.print("> ");
     }
 
-    public static void visualizarColeccion(Collection col) {
+    public static void visualizarColeccion(Collection col) throws Exception {
+        if (col.isEmpty()) {
+            throw new Exception("La lista está vacía");
+        }
+
+        System.out.println("Lista: ");
         col.forEach((ob) -> System.out.println(ob + "\n"));
     }
 

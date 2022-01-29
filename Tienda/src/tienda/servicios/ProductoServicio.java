@@ -13,28 +13,28 @@ public final class ProductoServicio {
         productoDAO = new ProductoDAO();
     }
 
-    public void crearYGuardarProducto(String nombre, Double precio, Fabricante fabricante) throws Exception {
+    public void guardarEnDDBB(String nombre, Double precio, Fabricante f) throws Exception {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new Exception("Debe indicar un nombre");
         }
         if (precio == null) {
             throw new Exception("Debe indicar un precio");
         }
-        if (fabricante == null) {
+        if (f == null) {
             throw new Exception("Debe indicar un fabricante");
         }
 
-        Producto producto = new Producto();
+        Producto p = new Producto();
 
-        producto.setNombre(nombre);
-        producto.setPrecio(precio);
-        producto.setFabricante(fabricante);
+        p.setNombre(nombre);
+        p.setPrecio(precio);
+        p.setFabricante(f);
 
-        productoDAO.guardarProductoEnDDBB(producto);
+        productoDAO.guardarEnDDBB(p);
     }
 
-    public void modificarProducto(Producto producto, String nombre, Double precio, Fabricante fabricante) throws Exception {
-        if (producto == null) {
+    public void modificar(Producto p, String nombre, Double precio, Fabricante f) throws Exception {
+        if (p == null) {
             throw new Exception("Debe indicar un producto");
         }
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -43,51 +43,47 @@ public final class ProductoServicio {
         if (precio == null || precio.isNaN()) {
             throw new Exception("Debe indicar un precio");
         }
-        if (fabricante == null) {
+        if (f == null) {
             throw new Exception("Debe indicar un fabricante");
         }
 
-        producto.setNombre(nombre);
-        producto.setPrecio(precio);
-        producto.setFabricante(fabricante);
+        p.setNombre(nombre);
+        p.setPrecio(precio);
+        p.setFabricante(f);
 
-        productoDAO.modificarProducto(producto);
+        productoDAO.modificar(p);
     }
 
-    public Collection<Producto> listarNombreYPrecioDeProductos() throws Exception {
-        Collection<Producto> productos = productoDAO.listarNombreYPrecioDeProductos();
-
-        return productos;
+    public Collection<Producto> listarNombreYPrecio() throws Exception {
+        return productoDAO.listarNombreYPrecio();
     }
 
-    public Collection<Producto> listarNombreDeProductos() throws Exception {
-        Collection<Producto> productos = productoDAO.listarNombreDeProductos();
-
-        return productos;
+    public Collection<Producto> listarNombre() throws Exception {
+        return productoDAO.listarNombre();
     }
 
-    public Collection<Producto> listarProductosSegunPrecio() throws Exception {
-        Collection<Producto> productos = productoDAO.listarProductosSegunPrecio();
-
-        return productos;
+    public Collection<Producto> listarSegunPrecio() throws Exception {
+        return productoDAO.listarSegunPrecio();
     }
 
     public Collection<Producto> listarPortatiles() throws Exception {
-        Collection<Producto> productos = productoDAO.listarPortatiles();
-
-        return productos;
+        return productoDAO.listarPortatiles();
     }
 
-    public Producto buscarProductoMasBarato() throws Exception {
-        Producto producto = productoDAO.buscarProductoMasBarato();
-
-        return producto;
+    public Producto buscarMasBarato() throws Exception {
+        return productoDAO.buscarMasBarato();
     }
 
-    public Producto buscarProductoPorCodigo(Integer codigo) throws Exception {
-        Producto producto = productoDAO.buscarProductoPorCodigo(codigo);
+    public Producto buscarPorCodigo(Integer codigo) throws Exception {
+        if (codigo == null || codigo < 1) {
+            throw new Exception("Debe indicar un código");
+        }
 
-        return producto;
+        return productoDAO.buscarPorCodigo(codigo);
+    }
+
+    public Collection<Producto> listarTodos() throws Exception {
+        return productoDAO.listarTodos();
     }
 
 }
